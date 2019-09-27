@@ -46,6 +46,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
+const isNpmBuild = process.env.NPM_BUILD === 'true';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
@@ -172,6 +173,21 @@ module.exports = function(webpackEnv) {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ].filter(Boolean),
+    externals: isNpmBuild ? 
+    {  
+      react: {          
+        commonjs: 'react',          
+        commonjs2: 'react',          
+        amd: 'React',          
+        root: 'React',      
+      },      
+      'react-dom': {          
+        commonjs: 'react-dom',          
+        commonjs2: 'react-dom',          
+        amd: 'ReactDOM',          
+        root: 'ReactDOM',      
+      },  
+    } : {},
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -179,9 +195,7 @@ module.exports = function(webpackEnv) {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+      filename: 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
@@ -202,6 +216,9 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      library: 'LIBRARY_NAME',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
     },
     optimization: {
       minimize: isEnvProduction,
@@ -268,16 +285,7 @@ module.exports = function(webpackEnv) {
           },
         }),
       ],
-      // Automatically split vendor and commons
-      // https://twitter.com/wSokra/status/969633336732905474
-      // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks: {
-        chunks: 'all',
-        name: false,
-      },
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
+      runtimeChunk: false,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -566,7 +574,7 @@ module.exports = function(webpackEnv) {
         Object.assign(
           {},
           {
-            inject: true,
+            inject: 'head',
             template: paths.appHtml,
           },
           isEnvProduction
