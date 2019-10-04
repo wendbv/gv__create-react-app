@@ -8,6 +8,8 @@ To create a new app, run:
 yarn create react-app my-app --typescript --scripts-version @wend/gv-react-scripts
 ```
 
+where "my-app" is replaced by the name of your package.
+
 Make sure that you reference the Wend NPM token in your global ~/.npmrc:
 
 ```
