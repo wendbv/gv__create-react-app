@@ -173,21 +173,22 @@ module.exports = function(webpackEnv) {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ].filter(Boolean),
-    externals: isNpmBuild ? 
-    {  
-      react: {          
-        commonjs: 'react',          
-        commonjs2: 'react',          
-        amd: 'React',          
-        root: 'React',      
-      },      
-      'react-dom': {          
-        commonjs: 'react-dom',          
-        commonjs2: 'react-dom',          
-        amd: 'ReactDOM',          
-        root: 'ReactDOM',      
-      },  
-    } : {},
+    externals: isNpmBuild
+      ? {
+          react: {
+            commonjs: 'react',
+            commonjs2: 'react',
+            amd: 'React',
+            root: 'React',
+          },
+          'react-dom': {
+            commonjs: 'react-dom',
+            commonjs2: 'react-dom',
+            amd: 'ReactDOM',
+            root: 'ReactDOM',
+          },
+        }
+      : {},
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -216,7 +217,7 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
-      library: 'LIBRARY_NAME',
+      library: 'GvLibrary',
       libraryTarget: 'umd',
       umdNamedDefine: true,
     },
