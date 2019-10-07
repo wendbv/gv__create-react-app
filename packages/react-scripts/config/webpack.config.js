@@ -220,6 +220,8 @@ module.exports = function(webpackEnv) {
       library: 'GvLibrary',
       libraryTarget: 'umd',
       umdNamedDefine: true,
+      // Global object should be 'this' to work with Server Side Rendering
+      globalObject: 'this',
     },
     optimization: {
       minimize: isEnvProduction,
