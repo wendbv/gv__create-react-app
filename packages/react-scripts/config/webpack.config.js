@@ -217,11 +217,8 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
-      library: 'GvLibrary',
-      libraryTarget: 'umd',
-      umdNamedDefine: true,
-      // Global object should be 'this' to work with Server Side Rendering
-      globalObject: 'this',
+      libraryTarget: isNpmBuild ? 'commonjs2' : 'window',
+      globalObject: isNpmBuild ? 'this' : 'window',
     },
     optimization: {
       minimize: isEnvProduction,
