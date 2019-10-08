@@ -16,7 +16,9 @@ Make sure that you reference the Wend NPM token in your global ~/.npmrc:
 //registry.npmjs.org/:_authToken=${WEND_NPM_TOKEN}
 ```
 
-And you have the WEND_NPM_TOKEN set in ~/.bash_profile:
+More information [here](https://docs.npmjs.com/configuring-your-registry-settings-as-an-npm-enterprise-user).
+
+Also make sure you have the WEND_NPM_TOKEN set in ~/.bash_profile:
 
 ```
 export WEND_NPM_TOKEN="PASTE_TOKEN_HERE"
