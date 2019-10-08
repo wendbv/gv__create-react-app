@@ -7,7 +7,7 @@ Starter kit for creating NPM packages for PBLX.
 - public/index.html: PROJECT_TITLE
 - package.json:
   - files - if any more files need to go in the NPM package add them here
-- gitlab: Add PRODUCTION**S3_BUCKET, PRODUCTION**S3_PATH,
+- gitlab: Add `PRODUCTION__S3_BUCKET`, `PRODUCTION__S3_PATH`,
 
 Also change this README.md.
 
