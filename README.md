@@ -1,5 +1,19 @@
 # Create React App - GrandVision Fork for building NPM packages
 
+## Keeping this fork up to date
+
+```sh
+git fetch upstream
+git checkout master
+git merge upstream/master
+git push
+```
+
+<https://help.github.com/en/articles/syncing-a-fork>
+
+We use our own version numbers for react-scripts so make sure to use this instead
+of the incoming version number.
+
 ## Creating an App
 
 To create a new app, run:
@@ -25,6 +39,19 @@ export WEND_NPM_TOKEN="PASTE_TOKEN_HERE"
 ```
 
 Further instructions are found in the README.md once you've created the app.
+
+## Updating react-scripts
+
+All files within the `packages/react-scripts` folder can be customized. To publish
+your changes to the NPM registry, move into the folder:
+
+```sh
+cd packages/react-scripts
+```
+
+Change the version number with `npm version <version>` or `npm version patch | minor | major`.
+
+Run `npm publish`.
 
 ## From the original create react app docs
 
