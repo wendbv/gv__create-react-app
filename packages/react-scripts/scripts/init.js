@@ -118,6 +118,11 @@ module.exports = function(
 
   appPackage.private = false;
 
+  // Restrict access
+  appPackage.publishConfig = {
+    access: 'restricted',
+  };
+
   appPackage.peerDependencies = {
     react: '>=16.8.0',
     'react-dom': '>=16.8.0',
