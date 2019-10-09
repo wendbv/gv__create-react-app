@@ -89,22 +89,46 @@ module.exports = function(
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
-  appPackage.dependencies = appPackage.dependencies || {};
+  appPackage.devDependencies = appPackage.dependencies || {};
 
-  const useTypeScript = appPackage.dependencies['typescript'] != null;
+  // Delete dependencies, only devDependencies are needed
+  delete appPackage.dependencies;
+
+  const useTypeScript = appPackage.devDependencies['typescript'] != null;
 
   // Setup the script rules
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
-    test: 'react-scripts test',
     eject: 'react-scripts eject',
+    'build:npm': 'NPM_BUILD=true node scripts/build.js',
+    types: 'tsc -p tsconfig.typings.json',
   };
 
   // Setup the eslint config
   appPackage.eslintConfig = {
     extends: 'react-app',
   };
+
+  // Add JS bundle as entry file
+  appPackage.main = 'build/static/js/bundle.js';
+
+  // Include JS bundle in NPM package
+  appPackage.files = ['build/static/js/bundle.js'];
+
+  appPackage.private = false;
+
+  // Restrict access
+  appPackage.publishConfig = {
+    access: 'restricted',
+  };
+
+  appPackage.peerDependencies = {
+    react: '>=16.8.0',
+    'react-dom': '>=16.8.0',
+  };
+
+  appPackage.homepage = '.';
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;

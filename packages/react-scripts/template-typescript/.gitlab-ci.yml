@@ -1,0 +1,30 @@
+image: registry.gitlab.com/wendbv/wend-internal/docker-base-image:latest
+
+stages:
+  - deploy
+  - publish
+
+deploy:production:
+  stage: deploy
+  only:
+    - master
+  when: manual
+  environment:
+    name: production
+  script:
+    - yarn install --pure-lockfile --no-cache
+    - yarn build
+    - aws s3 cp build/ s3://$PRODUCTION__S3_BUCKET/$PRODUCTION__S3_PATH --recursive --acl public-read
+
+publish:production:
+  stage: publish
+  only: 
+    - tags
+  environment:
+    name: production
+  when: manual
+  script:
+    - yarn install --pure-lockfile --no-cache
+    - yarn build:npm
+    - yarn types
+    - npm publish
