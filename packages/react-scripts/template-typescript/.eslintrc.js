@@ -1,5 +1,3 @@
-// NO EXPORT DEFAULT
-
 module.exports = {
   extends: [
     'eslint:recommended',
