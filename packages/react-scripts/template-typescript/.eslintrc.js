@@ -45,6 +45,8 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': ['off'],
     '@typescript-eslint/no-var-requires': ['off'],
     'react/prop-types': ['off'],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'prettier/prettier': [
       'error',
       {
